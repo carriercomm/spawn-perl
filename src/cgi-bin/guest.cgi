@@ -38,7 +38,7 @@
     exit(0);
 
 sub displayError {
-    #print("Content-type: text/html\nCache-Control: max-age=3600\n\n");
+    print("Content-type: text/html\nCache-Control: max-age=3600\n\n");
     print("<HTML>\n");
     print("<HEAD><TITLE>Guestbook Error</TITLE></HEAD>\n");
     print("<H1>Guestbook</H1>\n");
@@ -56,7 +56,7 @@ sub displayPage {
 
     readFormData($dataFile, \%entries);
 
-    #print("Content-type: text/html\r\nCache-Control: max-age=3600\r\n\r\n");
+    print("Content-type: text/html\r\nCache-Control: max-age=3600\r\n\r\n");
     print("<HTML>\n");
     print("<HEAD><TITLE>Guestbook</TITLE></HEAD>\n");
     print("<TABLE><TR><TD VALIGN=top><H1>Guestbook</H1></TD>\n");

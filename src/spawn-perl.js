@@ -1,8 +1,8 @@
 //regex used to capture header content
-var re = /^\s\S*?[\r\n]{,2}/g
+var re = /^[A-Za-z\-\/]+?\:\s?[A-Za-z0-9\-\/\=]*/mg
     ,url = require('url')
     ,spawn = require('child_process').spawn
-    ,myArray = [];
+    ,hArray = [];
 /* merge usage
   obj3 = merge(obj1,obj2)*/
 var merge = function() {
@@ -23,7 +23,8 @@ var merge = function() {
 function spawnPerlCGI(script,req,env,callback){
  var script_name = ''
     ,returnStr=''
-    ,returnErr='';
+    ,returnErr=''
+    ,count = 0;
  
  if(script!=''){
      var scriptArr = process.platform=='win32'?script.split("\\"):script.split('/');
@@ -79,24 +80,34 @@ function spawnPerlCGI(script,req,env,callback){
     req.pipe(cp.stdin);
     cp.stdout.on('data', function(data) {
       
-        // Remove the header that perl script might have written out
         returnStr += data.toString();
-         myArray = returnStr.match(re);
+         
         });
       //Any error the perl script returns will come through here
     cp.stderr.on("data", function(data) {
         returnErr+=data.toString();
         });
 	cp.on('exit',function(code){
-     
+      // Remove the header that perl script might have written to stdout.
+         hArray = returnStr.match(re);
+         returnStr = returnStr.replace(re,'');
 	 return callback(returnErr,returnStr);
 	 });
+     
+   
   }
-spawnPerlCGI.prototype.cgiHeader = function(){
-
-  return myArray;
-  
-  }
-  
+ // Converts the Array of header values and returns an Object 
+ // for passing into res.header() in one pass
+ spawnPerlCGI.prototype.getHeader = function(){
+       var objArray = Object.create(null);
+        for (var x in hArray)
+         {
+           header = hArray[x].split(':');
+          objArray[header[0]]=header[1];
+          }
+          //console.log(objArray);
+      return objArray;
+      
+      } 
  exports.spawnPerlCGI = spawnPerlCGI;
 
