@@ -70,12 +70,10 @@ function spawnPerlCGI(script,req,env,callback){
         }
   
     }
-    //console.log(env);
-    if(process.platform=='win32'){
-      var cp = spawn('perl.exe',[script],{env:env});
-      }else{
-       var cp = spawn(script,[],{env:env});
-       }
+    
+      // Childprocess.spawn    
+      var cp = spawn('perl',[script],{env:env});
+     
   // The request body is piped to 'stdin' of the CGI spawn
     req.pipe(cp.stdin);
     cp.stdout.on('data', function(data) {
