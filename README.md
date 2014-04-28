@@ -50,11 +50,11 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 ```
-## To use the example app.js, make sure you install express.The package.json is included
-
-  $ cd src
-  $ npm install
-  
+To use the example app.js, make sure you install express.The package.json is included
+```
+   $ cd src
+   $ npm install
+``` 
 ## Features
  
   * CGI Environment created for you, or you can pass own %ENV in the 3rd parameter
