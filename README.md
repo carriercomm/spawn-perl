@@ -59,5 +59,8 @@ To use the example app.js, make sure you install express.The package.json is inc
  
   * CGI Environment created for you, or you can pass own %ENV in the 3rd parameter
   * The CGI header is removed from the stdout of the Perl script, so you can pass own header in using the express
-    framework, or you can use the CGI header by calling the getHeader() method and passing as parameter in response.header()
+    framework, or you can use the CGI header by calling the getHeader() method which returns a json object, and passing as parameter in response.header()
+  * CGI error and data are returned in Callback as function(err,data){}. This allows you to write own error response
+back to client in response object
   * Tested with both Windows, using Strawberry Perl, and UBuntu.
+  * An example Blog written in Perl is included in cgi-bin folder
