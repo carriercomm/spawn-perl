@@ -23,8 +23,7 @@ var merge = function() {
 function spawnPerlCGI(script,req,env,callback){
  var script_name = ''
     ,returnStr=''
-    ,returnErr=''
-    ,count = 0;
+    ,returnErr='';
  
  if(script!=''){
      var scriptArr = process.platform=='win32'?script.split("\\"):script.split('/');
@@ -95,7 +94,7 @@ function spawnPerlCGI(script,req,env,callback){
    
   }
  // Converts the Array of header values and returns an Object 
- // for passing into res.header() in one pass
+ // to client for passing into res.header() in one pass
  spawnPerlCGI.prototype.getHeader = function(){
        var objArray = Object.create(null);
         for (var x in hArray)

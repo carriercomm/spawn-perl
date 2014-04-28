@@ -12,7 +12,6 @@ var script = path.join(__dirname, '/cgi-bin/guest.cgi');
 
 
 app.get(script_name, function(req, res){
-      var count=0;
       var perl = new Perlcgi(script,req,null,function(err,data){
        
        
@@ -20,7 +19,7 @@ app.get(script_name, function(req, res){
 			   if(err){
                 console.log(err);
 				}
-                // console.log(this.cgiHeader());
+             
                  res.header(perl.getHeader());
                  res.write(data);
                  res.end();
@@ -28,7 +27,6 @@ app.get(script_name, function(req, res){
    });
 
 app.post(script_name, function(req, res){
-         var count=0;
        var perl = new Perlcgi(script,req,null,function(err,data){
 		 
        if(err){              
