@@ -1,8 +1,7 @@
 #!/usr/bin/env perl
-
-print "Content-type: text/html\n";
-print "Cache-Control: no-cache\n";
-print "Allow: GET, HEAD\n\n";
+use CGI;
+my $cgi = new CGI;
+print $cgi->header();
 print <<"EOF";
 <HTML>
 

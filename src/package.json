@@ -1,6 +1,6 @@
 {
   "name": "spawn-perl",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "a Perl CGI using child_process spawn",
   "main": "app.js",
   "scripts": {
@@ -20,5 +20,5 @@
     "url": "https://github.com/mnjrupp/spawn-perl/issues"
   },
   "homepage": "https://github.com/mnjrupp/spawn-perl",
-  "dependencies": {"express":"4.0.0"}
+  "dependencies": {}
 }

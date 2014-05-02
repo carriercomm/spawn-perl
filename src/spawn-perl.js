@@ -1,5 +1,5 @@
 //regex used to capture header content
-var re = /^[A-Za-z\-\/]+?\:\s?[A-Za-z0-9\-\/\=]*/mg
+var re = /^[A-Za-z\-\/]+?\:\s?[A-Za-z0-9\-\/\=;,|\s]*/mg
     ,url = require('url')
     ,spawn = require('child_process').spawn
     ,hArray = [];
