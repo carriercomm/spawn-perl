@@ -50,10 +50,10 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 ```
-To use the example app.js, make sure you install express.The package.json is included
+To use the example app.js, make sure you install express.
 ```
    $ cd src
-   $ npm install
+   $ npm install express
 ``` 
 ## Features
  
@@ -64,3 +64,15 @@ To use the example app.js, make sure you install express.The package.json is inc
 back to client in response object
   * Tested with both Windows, using Strawberry Perl, and UBuntu.
   * An example Blog written in Perl is included in cgi-bin folder
+  
+##How to run example.
+```
+  $ cd src
+  $ node app
+```
+Open your browser and point it to localhost
+```
+  http://localhost:3000/cgi-bin/guest.cgi?display
+```
+
+ 
