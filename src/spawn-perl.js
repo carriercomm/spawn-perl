@@ -1,11 +1,12 @@
 //regex used to capture header content
-var re = /^[A-Za-z\-\/]+?\:\s?[A-Za-z0-9\-\/\=;,|\s]*/mg
-    ,url = require('url')
-    ,spawn = require('child_process').spawn
-    ,hArray = [];
+var re = /^[A-Za-z\-\/]+?\:\s?[A-Za-z0-9\-\/\=;,|\s]*/mg,
+    url = require('url'),
+    spawn = require('child_process').spawn,
+    hArray = [];
 /* merge usage
   obj3 = merge(obj1,obj2)*/
-var merge = function() {
+var merge = function () {
+   "use strict";
     var obj = {},
         i = 0,
         il = arguments.length,
@@ -23,10 +24,15 @@ var merge = function() {
 function spawnPerlCGI(script,req,env,callback){
  var script_name = ''
     ,returnStr=''
-    ,returnErr='';
+    ,returnErr=''
+    ,scriptArr
+    ,auth
+    ,header
+    ,name
+    ,cp;
  
- if(script!=''){
-     var scriptArr = process.platform=='win32'?script.split("\\"):script.split('/');
+ if(script!==''){
+         scriptArr = process.platform==='win32'?script.split("\\"):script.split('/');
          script_name = scriptArr.pop();
          }
  if(!env && req){
@@ -43,11 +49,11 @@ function spawnPerlCGI(script,req,env,callback){
           REQUEST_METHOD:     req.method,
         });
         //If GET Request than build QUERY_STRING
-        if (req.method == 'GET'){
+        if (req.method === 'GET'){
          env.QUERY_STRING = req.uri || url.parse(req.url).query;
          }
          // If POST Method than grab client content length and type
-        if (req.method == 'POST'){
+        if (req.method === 'POST'){
 		     //console.log('req.method = '+req.method);
             if ('content-length' in req.headers) {
               env.CONTENT_LENGTH = req.headers['content-length'];
@@ -57,21 +63,21 @@ function spawnPerlCGI(script,req,env,callback){
             }
          }
         if ('authorization' in req.headers) {
-          var auth = req.headers.authorization.split(' ');
+          auth = req.headers.authorization.split(' ');
           env.AUTH_TYPE = auth[0];
         }
         
             // Transform all headers into a general looking env
-        for (var header in req.headers) {
+        for (header in req.headers) {
           // Env looks like HTTP_HEADER_ALL_CAPS
-          var name = 'HTTP_' + header.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
+          name = 'HTTP_' + header.toUpperCase().replace(/[^A-Z0-9_]/g, '_');
           env[name] = req.headers[header];
         }
   
     }
     
       // Childprocess.spawn    
-      var cp = spawn('perl',[script],{env:env});
+       cp = spawn('perl',[script],{env:env});
      
   // The request body is piped to 'stdin' of the CGI spawn
     req.pipe(cp.stdin);
@@ -96,8 +102,10 @@ function spawnPerlCGI(script,req,env,callback){
  // Converts the Array of header values and returns an Object 
  // to client for passing into res.header() in one pass
  spawnPerlCGI.prototype.getHeader = function(){
-       var objArray = Object.create(null);
-        for (var x in hArray)
+       var objArray = Object.create(null),
+           x,
+           header;
+        for (x in hArray)
          {
            header = hArray[x].split(':');
           objArray[header[0]]=header[1];
