@@ -1,4 +1,4 @@
-var Perlcgi = require('./spawn-perl').spawnPerlCGI;
+var Perlcgi = require('./index').spawnPerlCGI;
 var express = require('express')
   ,http = require('http')
   ,url = require('url')
