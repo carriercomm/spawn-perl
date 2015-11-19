@@ -1,5 +1,5 @@
 //regex used to capture header content
-var re = /^[A-Za-z\-\/]+?\:\s?[A-Za-z0-9\-\/\=;,|\s]*/mg,
+var re = /^[A-Za-z\-\/]+?\:\s?[A-Za-z0-9\-\/\=;,|\s]*$/mg,
     url = require('url'),
     spawn = require('child_process').spawn,
     hArray = [];
@@ -92,8 +92,11 @@ function spawnPerlCGI(script,req,env,callback){
         });
 	cp.on('exit',function(code){
       // Remove the header that perl script might have written to stdout.
-         hArray = returnStr.match(re);
-         returnStr = returnStr.replace(re,'');
+        var parts = returnStr.split('\n\n');
+        if(parts.length && re.test(parts[0])){
+            hArray = parts.shift().match(re);
+        }
+        returnStr = parts.join('\n\n');
 	 return callback(returnErr,returnStr);
 	 });
      
@@ -107,8 +110,9 @@ function spawnPerlCGI(script,req,env,callback){
            header;
         for (x in hArray)
          {
+             if(hArray.hasOwnProperty(x) === false) continue;
            header = hArray[x].split(':');
-          objArray[header[0]]=header[1];
+          objArray[header[0]]=header[1].trim();;
           }
           //console.log(objArray);
       return objArray;
