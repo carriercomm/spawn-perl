@@ -1,6 +1,6 @@
 {
   "name": "spawn-perl",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "a Perl CGI using child_process spawn",
   "main": "app.js",
   "scripts": {
